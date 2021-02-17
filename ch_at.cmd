@@ -1,6 +1,6 @@
-#####################
-##      {{ rsite }}     ##
-#####################
+!#####################!
+!##      {{ rsite }}     ##!
+!#####################!
 
 {% for cell in cells %}
 RLSTC:CELL={{cell}},STATE=HALTED;
@@ -11,7 +11,7 @@ RXBLI:MO=RXSTG-{{tg}},FORCE;
 {% endfor %}
 
 @X Release
-@T 30
+@T 15
 @S Connect
 
 {% for tg in tgs %}
@@ -19,7 +19,7 @@ RXESE:MO=RXSTG-{{tg}};
 {% endfor %}
 
 @X Release
-@T 30
+@T 15
 @S Connect
 
 {% for tg in tgs %}
@@ -37,7 +37,7 @@ RXBLE:MO=RXSTG-{{tg}};
 
 
 @X Release
-@T 30
+@T 15
 @S Connect
 
 {% for cell in cells %}
