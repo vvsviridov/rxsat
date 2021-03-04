@@ -3,7 +3,40 @@ import csv
 from jinja2 import Environment, FileSystemLoader
 
 
-DATA = {}
+DATA = {
+    "BSC1": {
+        "980": {
+            "Cells": ["9801", "9802", "9803"],
+            "Tgs": ["5", "6", "7"]
+        },
+        "983": {
+            "Cells": ["9831", "9832", "9833"],
+            "Tgs": ["13", "14", "15"]
+        }
+    },
+    "BSC2": {
+        "770": {
+            "Cells": ["7701", "7702", "7703"],
+            "Tgs": ["5", "6", "7"]
+        },
+        "773": {
+            "Cells": ["7731", "7732", "7733"],
+            "Tgs": ["13", "14", "15"]
+        }
+    }
+}
+
+
+def row_to_dict(bsc, tg, rSite, cell):
+    if bsc not in DATA.keys():
+        DATA[bsc] = {}
+    if rSite not in DATA[bsc].keys():
+        DATA[bsc][rSite] = {
+            'Cells': [],
+            'Tgs': []
+        }
+    DATA[bsc][rSite]['Cells'].append(cell)
+    DATA[bsc][rSite]['Tgs'].append(tg)
 
 
 def read_csv():
@@ -30,15 +63,7 @@ def read_csv():
             tg = item[4]
             rSite = item[7]
             cell = item[8]
-            if bsc not in DATA.keys():
-                DATA[bsc] = {}
-            if rSite not in DATA[bsc].keys():
-                DATA[bsc][rSite] = {
-                    'Cells': [],
-                    'Tgs': []
-                }
-            DATA[bsc][rSite]['Cells'].append(cell)
-            DATA[bsc][rSite]['Tgs'].append(tg)
+            row_to_dict(bsc, tg, rSite, cell)
 
 
 def render_template():
@@ -57,6 +82,7 @@ def render_template():
 
 
 def main():
+    DATA.clear()
     read_csv()
     render_template()
 
